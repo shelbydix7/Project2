@@ -1,12 +1,56 @@
 
-{{!-- Survey --}}
-<div class="container">
-  <div class="jumbotron">
-    <h1 class="pb-3"><i class="fas fa-user-friends mr-3"></i>Blind Match</h1>
-    <h2 class="mt-4">Answer a few basic questions.</h2>
-    <h2 class="mb-4">Then find a soulmate with the greatest compatibility!</h2>
-    <a href="/survey"><button class="btn btn-lg btn-primary"><i class="far fa-list-alt mr-2"></i>Go to Survey</button></a>
-  </div>
-</div>
+{
+  user: {
+    admin: true
+  }
+}
 
-{{!-- Create Profile --}}
+{{#if user.admin}}
+  <button class="profile">Create Profile</button>
+{{else}}
+   <button class="login"> Log in</button>
+{{/if}}
+
+{{#with user}}
+<p>{{name}}</p>
+{{#with contact}}
+<span>Age: {{Age}}</span>
+{{/with}}
+<span>Address: {{address.city}},
+{{/with}}
+{{user.address.state}}</span>
+
+
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '{your-app-id}',
+      cookie     : true,
+      xfbml      : true,
+      version    : '{api-version}'
+    });
+      
+    FB.AppEvents.logPageView();   
+      
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+
+{user: {
+  contact: {
+    email: 'hi@azat.co',
+    age: 30
+  },
+  address: {
+    city: 'San Francisco',
+    state: 'California'
+  },
+  name: 'Azat'
+}}
