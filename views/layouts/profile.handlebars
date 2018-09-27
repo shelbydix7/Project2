@@ -38,6 +38,20 @@ Handlebars.registerHelper('get_length', function (obj) {
  return obj.length;
 }); 
 
+mutation CreateReviewForDate($date: Date!, $review: ReviewInput!) {
+  createReview(episode: $date, review: $review) {
+    stars
+    commentary
+  }
+}
+{
+  "data": {
+    "createReview": {
+      "stars": "",
+      "Write Review": ""
+    }
+  }
+}
 
 var t = Handlebars.compile($('#t').html());
 $('body').append(t(json));
