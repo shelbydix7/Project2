@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Your Profile</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.js"></script>
+</head>
+<body>
+
+<!--This is our template. -->
+<!--Data will be inserted in its according place, replacing the brackets.-->
+<script id="t" type="text/x-handlebars">
+    {{#each_when profile "gender" "name" "age" "city"}}
+        {{from}} ({{gender}})({{name}}) ({{age}}) ({{city}})<br> 
+    {{/each_when}}
+</script>
+
+<div class="content-placeholder"></div>
+
+<script>
+var json = {
+    "profile": [
+        { "gender": "age", "city", "name", "from": "user" },
+        { "gender": "age", "city", "name", , "from": "user" },
+        { "gender": "age", "city", "name", ,   "from": "user"  },
+        { "gender": "age", "city", "name", ,   "from": "user"  }
+    ]
+};
+
+Handlebars.registerHelper('each_when', function(list, k, v, opts) {
+  var match = list.findIndex(function(item) {
+    return (item[k] === v);
+  });
+  return (match >= 0) ? opts.fn(list[match]) : '';
+});
+
+Handlebars.registerHelper('get_length', function (obj) {
+ return obj.length;
+}); 
+
+
+var t = Handlebars.compile($('#t').html());
+$('body').append(t(json));
+</script>
+</body>
+</html>

@@ -1,25 +1,4 @@
 
-{
-  user: {
-    admin: true
-  }
-}
-
-{{#if user.admin}}
-  <button class="profile">Create Profile</button>
-{{else}}
-   <button class="login"> Log in</button>
-{{/if}}
-
-{{#with user}}
-<p>{{name}}</p>
-{{#with contact}}
-<span>Age: {{Age}}</span>
-{{/with}}
-<span>Address: {{address.city}},
-{{/with}}
-{{user.address.state}}</span>
-
 
 <script>
   window.fbAsyncInit = function() {
