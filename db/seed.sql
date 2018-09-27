@@ -1,4 +1,6 @@
 
-INSERT INTO user (name) VALUES ('Christ', 1, 3, 4, 6, 9);
+INSERT INTO register (name, email, gender, password) VALUES ('Christ', 'jallsadou@gmail.com', 'male','pass');
+
+INSERT INTO userLogin (name, password) VALUES ('cherno',"password");
 
 

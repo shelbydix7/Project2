@@ -1,0 +1,37 @@
+
+ <!--
+ {{#each questions}} 
+ <div class="question"> 
+      <h3>Question {{num}}</h3>
+      <h4>{{question}}</h4>
+      <div class="options input-group input-small mb-3">
+        <select name="scores" class="custom-select" id="q{{num}}">
+          <option value="*unanswered*">Select an Option</option>
+          <option value="1">1 (Strongly Disagree)</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5 (Strongly Agree)</option>
+        </select>
+      </div> 
+    {{/each}}
+    <button type="submit" id="submit" class="btn btn-lg btn-primary btn-block mb-4"><i class="fa fa-check-circle mr-2" aria-hidden="true"></i>Submit</button>
+    
+  <hr>
+</div>
+
+-->
+
+      <h3>Question {{num}}</h3>
+      <h4>{{question}}</h4>
+ <select name="scores" class="custom-select" id="q{{num}}">
+          <option value="*unanswered*">Select an Option</option>
+          <option value="1">1 (Strongly Disagree)</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5 (Strongly Agree)</option>
+        </select>
+        <br>
+
+  <button type="submit" id="submit" class="btn btn-lg btn-primary btn-block mb-4"><i class="fa fa-check-circle mr-2" aria-hidden="true"></i>Submit</button>
