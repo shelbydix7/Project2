@@ -1,7 +1,7 @@
 // Import the ORM to create functions that will interact with the database.
 var orm = require("../config/orm.js");
 
-var cat = {
+var match = {
   all: function(cb) {
     orm.all("", function(res) {
       cb(res);
@@ -15,7 +15,19 @@ var cat = {
       cb(res);
     });
   },
+
+
+  // finding your matcher
+  yourMatcher: function(cols, vals, cb) {
+    console.log("Values")
+    console.log(vals);
+    orm.yourMatcher("", cols, vals, function(res) {
+      cb(res);
+    });
+  },
+
+
 };
 
-// Export the database functions for the controller (catsController.js).
-module.exports = cat;
+// Export the database functions for the controller (htmlRoutes.js).
+module.exports = match;

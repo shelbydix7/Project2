@@ -57,5 +57,56 @@ router.post("/api/friends", function(req, res) {
 });
 
 
+
+
+
+
+//// finding your greatest compatibilty 
+    // API GET Request
+
+   
+
+    router.get("/api/match", function(req, res) {
+          res.render(data);
+        });
+
+    router.post("/api/match", function (req, res) {
+
+      match.yourMatcher([
+        "score"
+      ],[req.body.score], function(result, data){
+
+        var diff = 50;
+        var match = 0;
+        var userInput = req.body;
+       //console.log("result", userInput.length);
+       
+        for ( var i = 0; i < match.length; i++) {
+
+       //  console.log("cherno:", match2[i]);
+
+            var difference = 0;
+            console.log("==================");
+         
+            for (j = 0; j < userInput.score.length; j++) {
+
+                difference += Math.abs(result[i].score[j] - match.score[j]);
+    
+            }
+
+             if (difference < diff){
+                 match = i;
+                 diff = difference;
+             }
+        }
+   
+        res.json(match[match])
+  
+      }
+     
+    )       
+    });
+
+
 // Export routes for server.js to use.
 module.exports = router;
