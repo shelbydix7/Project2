@@ -1,66 +1,78 @@
-// Import MySQL connection.
-var connection = require("../config/connection.js");
+var LocalStrategy = require("passport-local").Strategy;
 
-// Object for all our SQL statement functions.
-var orm = {
+var mysql = require('mysql');
+var bcrypt = require('bcrypt-nodejs');
+//var dbconfig = require('./database');
+//var connection = mysql.createConnection(dbconfig.connection);
+var connection = require('../config/database.js');
 
-  
-  all: function(input, cb ) {
-    var queryString = "SELECT * FROM userMatch";
-    connection.query(queryString, function(err, result) {
-      if (err) {
-        throw err;
-      }
-     cb( result);
-    });
+//connection.query('USE ' + dbconfig.database);
+
+module.exports = function(passport) {
+ passport.serializeUser(function(user, done){
+  done(null, user.id);
+ });
+
+ passport.deserializeUser(function(id, done){
+  connection.query("SELECT * FROM users WHERE id = ? ", [id],
+   function(err, rows){
+    done(err, rows[0]);
+   });
+ });
+
+ passport.use(
+  'local-signup',
+  new LocalStrategy({
+   usernameField : 'username',
+   passwordField: 'password',
+   passReqToCallback: true
   },
+  function(req, username, password, done){
+   connection.query("SELECT * FROM users WHERE username = ? ", 
+   [username], function(err, rows){
+    if(err)
+     return done(err);
+    if(rows.length){
+     return done(null, false, req.flash('signupMessage', 'That is already taken'));
+    }else{
+     var newUserMysql = {
+      username: username,
+      password: bcrypt.hashSync(password, null, null)
+     };
 
-create: function(table, cols, vals, cb) {
-  var queryString = "INSERT INTO register" + table;
+     var insertQuery = "INSERT INTO users (username, password) values (?, ?)";
 
-  queryString += " (";
-  queryString += cols.toString();
-  queryString += ") ";
-  queryString += "VALUES (";
-  queryString += "?,?,?,?";
-  queryString += ") ";
+     connection.query(insertQuery, [newUserMysql.username, newUserMysql.password],
+      function(err, rows){
+       newUserMysql.id = rows.insertId;
 
-  console.log(queryString);
-
-  connection.query(queryString, vals, function(err, result) {
-    if (err) {
-      throw err;
+       return done(null, newUserMysql);
+      });
     }
-    cb(result);
-  });
-},
+   });
+  })
+ );
 
-
-// finding your match
-
-yourMatcher: function(table, cols, vals, cb) {
-  var queryString = "INSERT INTO userMatch" + table;
-
-  queryString += " (";
-  queryString += cols.toString();
-  queryString += ") ";
-  queryString += "VALUES (";
-  queryString += "?";
-  queryString += ") ";
-
-  //console.log(queryString);
-
-  connection.query(queryString, [vals], function(err, result) {
-    if (err) {
-      throw err;
+ passport.use(
+  'local-login',
+  new LocalStrategy({
+   usernameField : 'username',
+   passwordField: 'password',
+   passReqToCallback: true
+  },
+  function(req, username, password, done){
+   connection.query("SELECT * FROM users WHERE username = ? ", [username],
+   function(err, rows){
+    if(err)
+     return done(err);
+    if(!rows.length){
+     return done(null, false, req.flash('loginMessage', 'No User Found'));
     }
-   // console.log(result);
-    cb(result);
-  });
-},
+    if(!bcrypt.compareSync(password, rows[0].password))
+     return done(null, false, req.flash('loginMessage', 'Wrong Password'));
 
-
+    return done(null, rows[0]);
+   });
+  })
+ );
 };
-
-// Export the orm object for the model.
-module.exports = orm;

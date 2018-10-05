@@ -3,4 +3,7 @@ INSERT INTO register (name, email, gender, password) VALUES ('Christ', 'jallsado
 
 INSERT INTO userLogin (name, password) VALUES ('cherno',"password");
 
+INSERT INTO userMatch ( score) VALUES (2);
+
+
 

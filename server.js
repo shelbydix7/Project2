@@ -1,29 +1,45 @@
-var express = require("express");
-var bodyParser = require("body-parser");
-var routes = require("./controllers/htmlRoutes.js");
-
-var PORT = process.env.PORT || 8080;
+var express = require('express');
+var session = require('express-session');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var morgan = require('morgan');
 var app = express();
-
+var port = process.env.PORT || 8080;
 app.use(express.static("public"));
 
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }));
+var passport = require('passport');
+var flash = require('connect-flash');
 
-// parse application/json
-app.use(bodyParser.json());
+require('./config/passport')(passport);
 
-// Set Handlebars.
+app.use(morgan('dev'));
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({
+ extended: true
+}));
+
+
+
+app.use(session({
+ secret: 'justasecret',
+ resave:true,
+ saveUninitialized: true
+}));
+
+
 var exphbs = require("express-handlebars");
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-app.use(routes);
 
-app.listen(PORT, function() {
-  console.log("App now listening at localhost:" + PORT);
-});
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
 
+require('./app/routes.js')(app, passport);
+
+app.listen(port);
+console.log("Port: " + port);
 
 

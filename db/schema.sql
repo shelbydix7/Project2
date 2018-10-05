@@ -1,5 +1,7 @@
 
+
 CREATE DATABASE project2_db;
+
 
 USE project2_db;
 
@@ -17,10 +19,18 @@ CREATE TABLE register
 CREATE TABLE userLogin
 (
 	id int NOT NULL AUTO_INCREMENT,
+    name varchar(250) NOT NULL,
 	password varchar(250) NOT NULL,
 	PRIMARY KEY (id)
-)
+);
 
+
+CREATE TABLE userMatch
+(
+	id int NOT NULL AUTO_INCREMENT,
+    score int (20) NOT NULL,
+	PRIMARY KEY (id)
+);
 
 
 
