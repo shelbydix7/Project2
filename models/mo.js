@@ -5,8 +5,6 @@ var orm = require("../config/orm.js");
 
 var match = {
 
-
-  
     all: function(cb) {
      orm.all("", function(res) {
       cb(res);
