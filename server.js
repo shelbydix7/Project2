@@ -10,7 +10,7 @@ app.use(express.static("public"));
 var passport = require('passport');
 var flash = require('connect-flash');
 
-require('./config/passport')(passport);
+require('./config/orm')(passport);
 
 app.use(morgan('dev'));
 app.use(cookieParser());
@@ -37,9 +37,14 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-require('./app/routes.js')(app, passport);
+require('./controllers/htmlRoutes.js')(app, passport);
 
-app.listen(port);
-console.log("Port: " + port);
+//app.listen(port);
+//console.log("Port: " + port);
+
+app.listen(port, function() {
+    console.log("Server listening on: http://localhost:" + port);
+  });
+  
 
 

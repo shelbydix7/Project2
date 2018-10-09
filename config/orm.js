@@ -4,9 +4,10 @@ var mysql = require('mysql');
 var bcrypt = require('bcrypt-nodejs');
 //var dbconfig = require('./database');
 //var connection = mysql.createConnection(dbconfig.connection);
-var connection = require('../config/database.js');
+var connection = require('../config/connection.js');
 
 //connection.query('USE ' + dbconfig.database);
+
 
 module.exports = function(passport) {
  passport.serializeUser(function(user, done){
@@ -33,8 +34,9 @@ module.exports = function(passport) {
     if(err)
      return done(err);
     if(rows.length){
-     return done(null, false, req.flash('signupMessage', 'That is already taken'));
-    }else{
+      return done(null, false, req.flash('signupMessage', 'That is already taken'));
+    }
+    else{
      var newUserMysql = {
       username: username,
       password: bcrypt.hashSync(password, null, null)
@@ -76,3 +78,4 @@ module.exports = function(passport) {
   })
  );
 };
+

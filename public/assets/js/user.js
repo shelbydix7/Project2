@@ -12,7 +12,7 @@ $(function() {
     var matcher = {
       name: $("#name").val().trim(),
       photo: $("#photo").val().trim(),
-      scores: 
+      score: 
           $("#question1").val(),
        
   };
