@@ -75,8 +75,7 @@
                            <a href="/logout" class="btn btn-danger btn-sm">Logout</a>
                             <a href="/profile" class="btn btn-danger btn-sm">Profile</a>
 
-                      <!--  <p><a href="/api/match">API Friends List</a> | <a href="https://github.com/chernojallow/FriendFinder">
-                                GitHub Repo </a></p> -->
+                  
                     </div>
                 </footer>
 
@@ -85,41 +84,6 @@
 </body>
 
 </html>
-
-
-
-<!--
-
-<script type = "text/javascript">
-
-
-      $("#submit").on("click", function(event) {
-        // Make sure to preventDefault on a submit event.
-        event.preventDefault();
-    
-        var matcher = {
-          name: $("#name").val().trim(),
-                   photo: $("#photo").val().trim(), 
-                   score:$("#question1").val(),
-        
-        };
-        console.log("New User", matcher);
-        // Send the POST request.
-        $.ajax("/api/match", {
-          type: "POST",
-          data: matcher
-        }).then(
-          function(data) {
-            $("#bestMatch").text(data.name);
-            $("#matchPhoto").attr("src", data.photo);
-            $("#bestFriend").modal("toggle");
-             // window.location.replace("/survey");
-          }
-        );
-      });
-    
-
--->
 
 
 </script>
